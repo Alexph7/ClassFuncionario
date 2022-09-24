@@ -6,6 +6,8 @@
 package view;
 
 import data.Funcionario;
+import data.FuncionarioDao;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +15,13 @@ import data.Funcionario;
  */
 public class TelaFuncionario extends javax.swing.JFrame {
 
+    public void limparCampos(){
+        txtMatricula.setText(null);
+        txtNome.setText(null);
+        txtCargo.setText(null);
+        txtSalario.setText(null);
+    }
+    
     /**
      * Creates new form TelaFuncionario1
      */
@@ -129,19 +138,39 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Funcionario funcionario = new Funcionario();
-        
+        FuncionarioDao dao = new FuncionarioDao(); //Pra Chamar o metodo pra conectar
+        boolean status;
+        int codSalvar;
+
         //Estas Linhas Preenche as Variaveis Do Objeto Funcionario
         funcionario.setMatricula(txtMatricula.getText());
         funcionario.setNome(txtNome.getText());
         funcionario.setCargo(txtCargo.getText());
         funcionario.setSalario(Double.valueOf(txtSalario.getText()));
-        //Depois de Preenchido os Atributos do Objeto, Agora Precisa Conectar com o metodo da classe Dao, depois de conectar Chama o Metodo Salvar que vai receber esse objeto ja preenchido para que o metodo salvar faça a operação com o banco de dados.
-        
+        /*Depois de Preenchido os Atributos do Objeto, Agora Precisa Conectar com o metodo da classe Dao, depois de conectar Chama o Metodo Salvar que vai receber esse objeto ja preenchido para que o metodo salvar faça a operação com o banco de dados.
+        1. chamar o metodo conectar
+        2. chamar salvar e passar este objeto
+        3. chamar desconectar*/
+
+        status = dao.conectar(); //1. conectar com o banco
+
+        if (status == false) {
+            JOptionPane.showMessageDialog(null, "Erro ao Conectar Com o Banco de Dados");
+        } else { //se salvou retorna 1, senão retorna codigo do erro
+            codSalvar = dao.salvar(funcionario);
+            if (codSalvar == 1) {
+                JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
+                limparCampos();
+            }
+
+            }
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
