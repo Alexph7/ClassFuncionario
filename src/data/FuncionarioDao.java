@@ -13,9 +13,7 @@ public class FuncionarioDao {
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    public static Connection conectar() {
-
-        Connection conexao;
+    public boolean conectar() {
 
         //caminho do driver
         String driver = "com.mysql.cj.jdbc.Driver";
@@ -29,18 +27,18 @@ public class FuncionarioDao {
         try {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, password);
-            return conexao;
+            return true;
         } catch (ClassNotFoundException | SQLException e) {
             //A linha abaixo serve de apoio para esclarecer o erro
             //System.out.println(e);
-            return null;
+            return false;
         }
 
     }
 
     //Métodos para salvar ou adicionar usuários
-    private int salvar(Funcionario funcionario) {
-        int status;
+    public int salvar(Funcionario funcionario) {
+        int codigoStatus;
 
         try {
             String sql = "Insert into funcionariotab(matricula,nome,cargo,salario) values(?,?,?,?)";
@@ -50,8 +48,8 @@ public class FuncionarioDao {
             pst.setString(3, funcionario.getCargo());
             pst.setDouble(4, funcionario.getSalario());
 
-            status = pst.executeUpdate(); //Retorna 1
-            return status;
+            codigoStatus = pst.executeUpdate(); //Retorna 1
+            return codigoStatus;
         } catch (SQLException ex) {
             return ex.getErrorCode();//Retorna codigo do erro.
             //1062 tentaiva de cadastrar usuario já cadastrado.
