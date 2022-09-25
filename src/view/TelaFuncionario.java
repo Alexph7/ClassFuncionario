@@ -196,7 +196,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         try {
             funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
         } catch (NumberFormatException e) {
-            
+
         }
 
         /*Depois de Preenchido os Atributos do Objeto, Agora Precisa Conectar com o metodo da classe Dao, depois de conectar Chama o Metodo Salvar que vai receber esse objeto ja preenchido para que o metodo salvar faça a operação com o banco de dados.
@@ -238,7 +238,26 @@ public class TelaFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeKeyReleased
 
     private void btnPsquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPsquisarActionPerformed
-        // TODO add your handling code here:
+        String matricula = txtMatricula.getText(); //pega o campo que sera pesquisado
+
+        //Fazer a Conexão com o Banco
+        FuncionarioDao dao = new FuncionarioDao();
+        Funcionario funcionario = new Funcionario();
+        boolean status = dao.conectar(); //se conectar metodo retorna true ou false
+        if (status == true) {//se conectou, agora chama o metodo consultar
+            funcionario = dao.consultar(matricula);//o metodo chamado retorna um objeto funcionario então precisa tbm de uma variavel do tipo funcionario pra receber o resultado. a expressão tbm pode ser escrita assim: Funcionario funcionario = dao.consultar(matricula);
+            if (funcionario == null) {//se o metodo la na classe funcionarioDao na expressão if(rs.next) não encontrar matricula então retorna null
+                JOptionPane.showMessageDialog(null, "Funcionario Não Encontrado Nessa Matrícula");
+            } else {//se encontrou então agora carrega os dados no formulario
+                txtNome.setText(funcionario.getNome());
+                txtCargo.setText(funcionario.getCargo());
+                txtSalario.setText(String.valueOf(funcionario.getSalario()));
+            }
+
+        } else {// referente ao primeiro if, que se verifica se a conexão aconteceu, senão...
+            JOptionPane.showMessageDialog(null, "Erro Na Conexão com o banco de Dados");
+        }
+        dao.desconectar();
     }//GEN-LAST:event_btnPsquisarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
