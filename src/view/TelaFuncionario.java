@@ -161,7 +161,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Funcionario funcionario = new Funcionario();
         FuncionarioDao dao = new FuncionarioDao(); //Pra Chamar o metodo pra conectar
-        boolean status;
+        boolean status = false;
         int codSalvar;
 
         //Estas Linhas Preenche as Variaveis Do Objeto Funcionario
@@ -169,26 +169,33 @@ public class TelaFuncionario extends javax.swing.JFrame {
         funcionario.setNome(txtNome.getText());
         funcionario.setCargo(txtCargo.getText());
         funcionario.setSalario(Double.valueOf(txtSalario.getText()));
+
         /*Depois de Preenchido os Atributos do Objeto, Agora Precisa Conectar com o metodo da classe Dao, depois de conectar Chama o Metodo Salvar que vai receber esse objeto ja preenchido para que o metodo salvar faça a operação com o banco de dados.
         1. chamar o metodo conectar
         2. chamar salvar e passar este objeto
         3. chamar desconectar*/
+        
+        //validar campos para nao ficar vazio
+        if (txtMatricula.getText().isEmpty() || txtNome.getText().isEmpty() || txtCargo.getText().isEmpty() || txtSalario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha os Campos Vazios");
+        } else {
 
-        status = dao.conectar(); //1. conectar com o banco
+            status = dao.conectar(); //1. conectar com o banco
 
-        if (status == false) {
-            JOptionPane.showMessageDialog(null, "Erro ao Conectar Com o Banco de Dados");
-        } else { //se salvou retorna 1, senão retorna codigo do erro
-            codSalvar = dao.salvar(funcionario);
-            if (codSalvar == 1) {
-                JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
-                limparCampos();
-            } else if (codSalvar == 1062) {
-                JOptionPane.showMessageDialog(null, "Matricula ja usada");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
+            if (status == false) {
+                JOptionPane.showMessageDialog(null, "Erro ao Conectar Com o Banco de Dados");
+            } else { //se salvou retorna 1, senão retorna codigo do erro
+                codSalvar = dao.salvar(funcionario); //2. Chamando método salvar
+                if (codSalvar == 1) {
+                    JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
+                    limparCampos();
+                } else if (codSalvar == 1062) {
+                    JOptionPane.showMessageDialog(null, "Matricula ja usada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
+                }
+
             }
-
         }
         dao.desconectar();
 
