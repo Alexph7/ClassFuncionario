@@ -15,13 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class TelaFuncionario extends javax.swing.JFrame {
 
-    public void limparCampos(){
+    public void limparCampos() {
         txtMatricula.setText(null);
         txtNome.setText(null);
         txtCargo.setText(null);
         txtSalario.setText(null);
+        txtMatricula.requestFocus();//cursor ficara aqui
     }
-    
+
     /**
      * Creates new form TelaFuncionario1
      */
@@ -71,6 +72,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
         jLabel4.setText("Salário");
 
         txtSalario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSalario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSalarioKeyReleased(evt);
+            }
+        });
 
         btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSalvar.setText("Salvar");
@@ -110,8 +116,8 @@ public class TelaFuncionario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -129,7 +135,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                     .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -161,16 +167,24 @@ public class TelaFuncionario extends javax.swing.JFrame {
             if (codSalvar == 1) {
                 JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
                 limparCampos();
+            } else if (codSalvar == 1062) {
+                JOptionPane.showMessageDialog(null, "Matricula ja usada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
             }
 
-            }
-
+        }
+        dao.desconectar();
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void txtSalarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalarioKeyReleased
+        txtSalario.setText(txtSalario.getText().replaceAll("[^0-9]", ""));
+    }//GEN-LAST:event_txtSalarioKeyReleased
+
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
