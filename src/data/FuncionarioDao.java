@@ -14,7 +14,7 @@ public class FuncionarioDao {
     ResultSet rs = null;
 
     public boolean conectar() {
-       
+
         //caminho do driver
         String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -55,6 +55,29 @@ public class FuncionarioDao {
             //System.out.println(ex.getErrorCode());//mostrar o numero do erro no console
             return ex.getErrorCode();//Retorna codigo do erro.
             //1062 tentaiva de cadastrar usuario já cadastrado.
+        }
+    }
+
+    public Funcionario consultar(String matricula) {//se retornar varias informações o metodo sera diferente.
+
+        Funcionario funcionario = new Funcionario();
+
+        try {
+            pst = conexao.prepareStatement("SELECT * FROM funcionariotab WHERE matricula=?");
+            //a linha abaixo é o comando que vai setar um parametro no lugar da ? no comando sql, 
+            pst.setString(1, matricula);
+            //na linha abaixo o rs é a variavel do tipo resultSet que é para guardar o resultado do que virá do banco de dados.
+            rs = pst.executeQuery();
+            if (rs.next()) {//verifica se achou a matricula informada.
+                funcionario.setNome(rs.getString(2));
+                funcionario.setCargo(rs.getString(3));
+                funcionario.setSalario(rs.getDouble(4));
+                return funcionario;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+         return null;
         }
     }
 
