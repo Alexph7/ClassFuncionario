@@ -48,28 +48,34 @@ public class TelaFuncionario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastrar Funcionario");
         setName("FormularioFuncionario"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Matricula");
+        jLabel1.setText("*Matricula");
 
         txtMatricula.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         txtNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Nome");
+        jLabel2.setText("*Nome");
 
         txtCargo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Cargo");
+        jLabel3.setText("*Cargo");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Salário");
+        jLabel4.setText("*Salário");
 
         txtSalario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSalario.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -85,6 +91,8 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("(*) Campos Obigatórios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,11 +121,17 @@ public class TelaFuncionario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,6 +196,10 @@ public class TelaFuncionario extends javax.swing.JFrame {
         txtSalario.setText(txtSalario.getText().replaceAll("[^0-9]", ""));
     }//GEN-LAST:event_txtSalarioKeyReleased
 
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+        txtNome.setText(txtNome.getText().replaceAll("[^a-zA-Z]", ""));
+    }//GEN-LAST:event_txtNomeKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -224,6 +242,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNome;
