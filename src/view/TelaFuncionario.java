@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
-import data.Funcionario;
-import data.FuncionarioDao;
+import data.*;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ph757
- */
 public class TelaFuncionario extends javax.swing.JFrame {
 
     public void limparCampos() {
@@ -23,9 +13,6 @@ public class TelaFuncionario extends javax.swing.JFrame {
         txtMatricula.requestFocus();//cursor ficara aqui
     }
 
-    /**
-     * Creates new form TelaFuncionario1
-     */
     public TelaFuncionario() {
         initComponents();
     }
