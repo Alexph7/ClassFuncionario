@@ -60,6 +60,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         txtMatricula.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         txtNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtNome.setToolTipText("Apenas Letras");
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNomeKeyReleased(evt);
@@ -78,6 +79,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         jLabel4.setText("*Salário");
 
         txtSalario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSalario.setToolTipText("Apenas Números");
         txtSalario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSalarioKeyReleased(evt);
