@@ -14,12 +14,12 @@ public class FuncionarioDao {
     ResultSet rs = null;
 
     public boolean conectar() {
-
+       
         //caminho do driver
         String driver = "com.mysql.cj.jdbc.Driver";
 
         //armazenando informações nas variaveis referentes ao banco
-        String url = "jdbc:mysql://localhost:3306/funcionariotab";
+        String url = "jdbc:mysql://localhost:3306/funcionario";
         String user = "root";
         String password = "";
 
@@ -51,12 +51,14 @@ public class FuncionarioDao {
             codigoStatus = pst.executeUpdate(); //Retorna 1
             return codigoStatus;
         } catch (SQLException ex) {
+            //System.out.println(ex); obter informações sobre o erro
+            //System.out.println(ex.getErrorCode());//mostrar o numero do erro no console
             return ex.getErrorCode();//Retorna codigo do erro.
             //1062 tentaiva de cadastrar usuario já cadastrado.
         }
     }
-    
-    public void desconectar(){
+
+    public void desconectar() {
         try {
             conexao.close();
         } catch (Exception e) {
