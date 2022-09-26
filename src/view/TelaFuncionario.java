@@ -248,6 +248,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             funcionario = dao.consultar(matricula);//o metodo chamado retorna um objeto funcionario então precisa tbm de uma variavel do tipo funcionario pra receber o resultado. a expressão tbm pode ser escrita assim: Funcionario funcionario = dao.consultar(matricula);
             if (funcionario == null) {//se o metodo la na classe funcionarioDao na expressão if(rs.next) não encontrar matricula então retorna null
                 JOptionPane.showMessageDialog(null, "Funcionario Não Encontrado Nessa Matrícula");
+                limparCampos();
             } else {//se encontrou então agora carrega os dados no formulario
                 txtNome.setText(funcionario.getNome());
                 txtCargo.setText(funcionario.getCargo());
