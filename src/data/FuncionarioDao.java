@@ -77,7 +77,25 @@ public class FuncionarioDao {
                 return null;
             }
         } catch (SQLException e) {
-         return null;
+            return null;
+        }
+    }
+
+    public Funcionario alterar(String matricula) {
+        Funcionario funcionario = new Funcionario();
+        int statusConexao;
+        try {
+            pst = conexao.prepareStatement("update funcionariotab set nome=?, cargo=?, salario=? where matricula=?");
+            pst.setString(1, funcionario.getNome());
+            pst.setString(2, funcionario.getCargo());
+            pst.setDouble(3, funcionario.getSalario());
+            pst.setString(4, funcionario.getMatricula());
+
+            statusConexao = pst.executeUpdate();//se retorna 1 então conectou
+            return funcionario;
+
+        } catch (SQLException e) {
+            return null;
         }
     }
 
