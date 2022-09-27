@@ -96,6 +96,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -254,6 +255,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 txtNome.setText(funcionario.getNome());
                 txtCargo.setText(funcionario.getCargo());
                 txtSalario.setText(String.valueOf(funcionario.getSalario()));
+                btnAlterar.setEnabled(true);
             }
 
         } else {// referente ao primeiro if, que se verifica se a conexão aconteceu, senão...
