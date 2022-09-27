@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class FuncionarioDao {
 
@@ -81,8 +82,7 @@ public class FuncionarioDao {
         }
     }
 
-    public Funcionario alterar(String matricula) {
-        Funcionario funcionario = new Funcionario();
+    public int alterar(Funcionario funcionario) {
         int statusConexao;
         try {
             pst = conexao.prepareStatement("update funcionariotab set nome=?, cargo=?, salario=? where matricula=?");
@@ -91,11 +91,11 @@ public class FuncionarioDao {
             pst.setDouble(3, funcionario.getSalario());
             pst.setString(4, funcionario.getMatricula());
 
-            statusConexao = pst.executeUpdate();//se retorna 1 então conectou
-            return funcionario;
-
+            return statusConexao = pst.executeUpdate();//se retorna 1 então conectou
+            
         } catch (SQLException e) {
-            return null;
+           // JOptionPane.showMessageDialog(null, e);
+            return e.getErrorCode();
         }
     }
 
