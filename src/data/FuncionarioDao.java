@@ -1,7 +1,6 @@
 package data;
 
 import java.sql.*;
-import javax.swing.JOptionPane;
 
 public class FuncionarioDao {
 
@@ -92,10 +91,23 @@ public class FuncionarioDao {
             pst.setString(4, funcionario.getMatricula());
 
             return statusConexao = pst.executeUpdate();//se retorna 1 então conectou
-            
+
         } catch (SQLException e) {
-           // JOptionPane.showMessageDialog(null, e);
+            // JOptionPane.showMessageDialog(null, e);
             return e.getErrorCode();
+        }
+    }
+
+    public boolean deletar(String matricula) {
+
+        try {
+            pst = conexao.prepareStatement("delete from funcionariotab where matricula = ?");
+            pst.setString(1, matricula);
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            //System.out.println(e);
+            return false;
         }
     }
 
