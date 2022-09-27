@@ -105,6 +105,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         btnDeletar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.setEnabled(false);
         btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeletarActionPerformed(evt);
@@ -251,11 +252,12 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Funcionario Não Encontrado Nessa Matrícula");
                 limparCampos();
             } else {//se encontrou então agora carrega os dados no formulario
-                
+
                 txtNome.setText(funcionario.getNome());
                 txtCargo.setText(funcionario.getCargo());
                 txtSalario.setText(String.valueOf(funcionario.getSalario()));
                 btnAlterar.setEnabled(true);
+                btnDeletar.setEnabled(true);
             }
 
         } else {// referente ao primeiro if, que se verifica se a conexão aconteceu, senão...
@@ -266,10 +268,10 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         String matricula = txtMatricula.getText();
-        
+
         Funcionario funcionario = new Funcionario();
         FuncionarioDao dao = new FuncionarioDao();
-       
+
         boolean statusAlterar;
         int codErro;
 
@@ -303,7 +305,23 @@ public class TelaFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+        FuncionarioDao dao = new FuncionarioDao();
+
+        boolean statusDelCon = dao.conectar();
+        boolean statusDel = false;
+
+        if (statusDelCon == false) {
+            JOptionPane.showMessageDialog(null, "Erro ao Conectar com Banco de dados");
+        } else {
+            int confirma = JOptionPane.showConfirmDialog(null, "Tem Certeza Que Deseja Excluir Funcionario?","ATENÇÃO", JOptionPane.YES_NO_OPTION); //se usuario responder sim retorna 0 se responder, não, retorna 1, se cancelar retorna 2.
+            //System.out.println(confirma);
+            if (confirma == 0) {
+                statusDel = dao.deletar(txtMatricula.getText());
+                JOptionPane.showMessageDialog(null, "Funcionario Excluido com Sucesso");
+                limparCampos();
+            } 
+        }
+        dao.desconectar();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
