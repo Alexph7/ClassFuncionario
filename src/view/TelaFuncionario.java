@@ -295,7 +295,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                     limparCampos();
                 } else {
                     //System.out.println(codErro);
-                    //JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
+                    JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
                 }
             }
         }
