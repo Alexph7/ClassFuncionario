@@ -58,7 +58,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btnSalvar" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="btnPsquisar" min="-2" pref="109" max="-2" attributes="0"/>
+                              <Component id="btnPesquisar" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="btnAlterar" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -100,7 +100,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSalvar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="btnPsquisar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnPesquisar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="btnAlterar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="btnDeletar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
@@ -194,7 +194,7 @@
         <Property name="text" type="java.lang.String" value="(*) Campos Obigat&#xf3;rios"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnPsquisar">
+    <Component class="javax.swing.JButton" name="btnPesquisar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="0"/>
@@ -202,7 +202,7 @@
         <Property name="text" type="java.lang.String" value="Pesquisar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPsquisarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAlterar">

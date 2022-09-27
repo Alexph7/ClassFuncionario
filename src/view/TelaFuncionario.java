@@ -36,7 +36,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         txtSalario = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btnPsquisar = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
 
@@ -86,11 +86,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         jLabel5.setText("(*) Campos Obigatórios");
 
-        btnPsquisar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnPsquisar.setText("Pesquisar");
-        btnPsquisar.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPsquisarActionPerformed(evt);
+                btnPesquisarActionPerformed(evt);
             }
         });
 
@@ -141,7 +141,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(btnPsquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
@@ -173,7 +173,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPsquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
@@ -186,7 +186,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Funcionario funcionario = new Funcionario();
         FuncionarioDao dao = new FuncionarioDao(); //Pra Chamar o metodo pra conectar
-        boolean status = false;
+        boolean status;
         int codSalvar;
 
         //Estas Linhas Preenche as Variaveis Do Objeto Funcionario
@@ -237,19 +237,20 @@ public class TelaFuncionario extends javax.swing.JFrame {
         txtNome.setText(txtNome.getText().replaceAll("[^a-zA-Z]", ""));
     }//GEN-LAST:event_txtNomeKeyReleased
 
-    private void btnPsquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPsquisarActionPerformed
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         String matricula = txtMatricula.getText(); //pega o campo que sera pesquisado
 
         //Fazer a Conexão com o Banco
         FuncionarioDao dao = new FuncionarioDao();
-        Funcionario funcionario = new Funcionario();
+        Funcionario funcionario;
         boolean status = dao.conectar(); //se conectar metodo retorna true ou false
         if (status == true) {//se conectou, agora chama o metodo consultar
             funcionario = dao.consultar(matricula);//o metodo chamado retorna um objeto funcionario então precisa tbm de uma variavel do tipo funcionario pra receber o resultado. a expressão tbm pode ser escrita assim: Funcionario funcionario = dao.consultar(matricula);
-            if (funcionario == null) {//se o metodo la na classe funcionarioDao na expressão if(rs.next) não encontrar matricula então retorna null
+            if (funcionario == null) {//se o metodo la na classe funcionarioDao na expressão if(rs.next)busca no banco, não encontrar matricula então retorna null
                 JOptionPane.showMessageDialog(null, "Funcionario Não Encontrado Nessa Matrícula");
                 limparCampos();
             } else {//se encontrou então agora carrega os dados no formulario
+                
                 txtNome.setText(funcionario.getNome());
                 txtCargo.setText(funcionario.getCargo());
                 txtSalario.setText(String.valueOf(funcionario.getSalario()));
@@ -259,10 +260,44 @@ public class TelaFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro Na Conexão com o banco de Dados");
         }
         dao.desconectar();
-    }//GEN-LAST:event_btnPsquisarActionPerformed
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
+        String matricula = txtMatricula.getText();
+        
+        Funcionario funcionario = new Funcionario();
+        FuncionarioDao dao = new FuncionarioDao();
+       
+        boolean statusAlterar;
+        int codErro;
+
+        //Estas Linhas Preenche as Variaveis Do Objeto Funcionario
+        funcionario.setMatricula(matricula);
+        funcionario.setNome(txtNome.getText());
+        funcionario.setCargo(txtCargo.getText());
+        try {
+            funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
+        } catch (NumberFormatException e) {
+
+        }
+        if (txtMatricula.getText().isEmpty() || txtNome.getText().isEmpty() || txtCargo.getText().isEmpty() || txtSalario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha os Campos Vazios");
+        } else {
+            statusAlterar = dao.conectar(); //1. conectar com o banco
+            if (statusAlterar == false) {
+                JOptionPane.showMessageDialog(null, "Erro ao Conectar Com o Banco de Dados");
+            } else { //se salvou retorna 1, senão retorna codigo do erro
+                codErro = dao.alterar(funcionario); //2. Chamando método correspondente
+                if (codErro == 1) {
+                    JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
+                    limparCampos();
+                } else {
+                    //System.out.println(codErro);
+                    //JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario");
+                }
+            }
+        }
+        dao.desconectar();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
@@ -308,7 +343,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JButton btnPsquisar;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
