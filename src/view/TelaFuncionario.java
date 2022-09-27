@@ -291,7 +291,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             } else { //se salvou retorna 1, senão retorna codigo do erro
                 codErro = dao.alterar(funcionario); //2. Chamando método correspondente
                 if (codErro == 1) {
-                    JOptionPane.showMessageDialog(null, "Funcionário inserido com sucesso");
+                    JOptionPane.showMessageDialog(null, "Funcionário Alterado com sucesso");
                     limparCampos();
                 } else {
                     //System.out.println(codErro);
